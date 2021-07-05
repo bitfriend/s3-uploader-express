@@ -1,0 +1,28 @@
+{
+  "name": "s3-uploader-express",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bitfriend/s3-uploader-express.git"
+  },
+  "keywords": [
+    "Express",
+    "Amazon",
+    "S3",
+    "Upload"
+  ],
+  "author": "bitfriend",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bitfriend/s3-uploader-express/issues"
+  },
+  "homepage": "https://github.com/bitfriend/s3-uploader-express#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
