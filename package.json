@@ -24,8 +24,10 @@
   },
   "homepage": "https://github.com/bitfriend/s3-uploader-express#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-fileupload": "^1.2.1",
+    "sharp": "^0.28.3",
     "uuid": "^8.3.2"
   }
 }
