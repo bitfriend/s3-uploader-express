@@ -31,10 +31,12 @@ app.post('/upload', async (req, res, next) => {
   if (req.files) {
     const file = req.files.image;
     const fileName = file.name;
-    const dirPath = createNestedDirectory(['storage', uuidv4()]);
+    const id = uuidv4();
+    const dirPath = createNestedDirectory(['storage', id]);
     const originPath = path.join(dirPath, fileName);
     file.mv(originPath, err => {
       if (err) {
+        deleteDirectory(`storage/${id}`);
         throw err;
       } else {
         const largeName = path.basename(fileName) + '-large' + path.extname(fileName);
@@ -44,9 +46,10 @@ app.post('/upload', async (req, res, next) => {
         const p2 = resizeAndUploadToS3(originPath, path.join(dirPath, mediumName), 1024, 1024);
         const p3 = resizeAndUploadToS3(originPath, path.join(dirPath, thumbName), 300, 300);
         Promise.all([p1, p2, p3]).then(([large, medium, thumb]) => {
-          deleteDirectory(dirPath);
+          deleteDirectory(`storage/${id}`);
           res.json({ large, medium, thumb });
         }).catch(e => {
+          deleteDirectory(`storage/${id}`);
           throw e;
         });
       }
