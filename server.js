@@ -3,7 +3,7 @@ const cors = require('cors');
 const fileUpload = require('express-fileupload');
 const uuidv4 = require('uuid').v4;
 const path = require('path');
-const { createNestedDirectory, resizeAndUploadToS3 } = require('./helpers');
+const { createNestedDirectory, deleteDirectory, resizeAndUploadToS3 } = require('./helpers');
 
 const app = express();
 
@@ -44,6 +44,7 @@ app.post('/upload', async (req, res, next) => {
         const p2 = resizeAndUploadToS3(originPath, path.join(dirPath, mediumName), 1024, 1024);
         const p3 = resizeAndUploadToS3(originPath, path.join(dirPath, thumbName), 300, 300);
         Promise.all([p1, p2, p3]).then(([large, medium, thumb]) => {
+          deleteDirectory(dirPath);
           res.json({ large, medium, thumb });
         }).catch(e => {
           throw e;
@@ -56,3 +57,5 @@ app.post('/upload', async (req, res, next) => {
     throw err;
   }
 });
+
+module.exports = app;
